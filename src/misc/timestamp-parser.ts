@@ -26,6 +26,11 @@ export function recusivelyCheckObjectValue(input: any) {
   if (isArray) {
     return input.map(value => recusivelyCheckObjectValue(value));
   }
+  // Parse Firestore data type DocumentReference:
+  const isDocumentReference = input.id && input.firestore && input.path;
+  if (isDocumentReference) {
+    return input.id;
+  }
   const isObject = typeof input === 'object';
   if (isObject) {
     Object.keys(input).map(key => {
